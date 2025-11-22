@@ -1,10 +1,17 @@
 import { ThemeProvider } from "@/hooks/useTheme";
 import { ConvexProvider, ConvexReactClient } from "convex/react";
+import Constants from "expo-constants";
 import { Stack } from "expo-router";
 
-const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, {
-  unsavedChangesWarning: false,
-});
+const convexUrl =
+  Constants.expoConfig?.extra?.convexUrl ??
+  Constants.manifest?.extra?.convexUrl; // fallback for dev
+
+const convex = new ConvexReactClient(convexUrl);
+
+// const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, {
+// unsavedChangesWarning: false,
+// });
 export default function RootLayout() {
   return (
     <ConvexProvider client={convex}>
